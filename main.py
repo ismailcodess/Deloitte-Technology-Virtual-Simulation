@@ -41,12 +41,15 @@ def convertFromFormat2 (jsonObject):
 
     # IMPLEMENT: Conversion From Type 2
 
-    convertedTimestamp = 0
+    # Converting timestamp to the correct format (ISO format --> milliseconds since epoch)
+    originalTimestamp = jsonObject.get('timestamp')
+    convertedTimestamp_seconds = datetime.datetime.fromisoformat(originalTimestamp).timestamp()
+    convertedTimestamp_milliseconds = int(convertedTimestamp_seconds * 1000)
 
     format2 = {
         "deviceID": jsonObject.get('device').get('id'),
         "deviceType": jsonObject.get('device').get('type'),
-        "timestamp": jsonObject.get('timestamp'),
+        "timestamp": convertedTimestamp_milliseconds,
         "location": {
             "country": jsonObject.get('country'),
             "city": jsonObject.get('city'),
