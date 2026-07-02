@@ -11,15 +11,56 @@ with open("./data-result.json","r") as f:
 
 # convert json data from format 1 to the expected format
 def convertFromFormat1 (jsonObject):
-
-    # IMPLEMENT: Conversion From Type 1
     
+    # IMPLEMENT: Conversion From Type 1
+
+    # Extracting the various parts of the location (country, city, etc.) using the split method
+    locationList = jsonObject.get('location').split('/')
+
+    format1 = {
+        "deviceID": jsonObject.get('deviceID'),
+        "deviceType": jsonObject.get('deviceType'),
+        "timestamp": jsonObject.get('timestamp'),
+        "location": {
+            "country": locationList[0],
+            "city": locationList[1],
+            "area": locationList[2],
+            "factory": locationList[3],
+            "section": locationList[4]
+        },
+        "data": {
+            "status": jsonObject.get('operationStatus'),
+            "temperature": jsonObject.get('temp')
+        }
+    }
+
+    return format1
 
 # convert json data from format 2 to the expected format
 def convertFromFormat2 (jsonObject):
-    
+
     # IMPLEMENT: Conversion From Type 2
 
+    convertedTimestamp = 0
+
+    format2 = {
+        "deviceID": jsonObject.get('device').get('id'),
+        "deviceType": jsonObject.get('device').get('type'),
+        "timestamp": jsonObject.get('timestamp'),
+        "location": {
+            "country": jsonObject.get('country'),
+            "city": jsonObject.get('city'),
+            "area": jsonObject.get('area'),
+            "factory": jsonObject.get('factory'),
+            "section": jsonObject.get('section')
+        },
+        "data": {
+            "status": jsonObject.get('data').get('status'),
+            "temperature": jsonObject.get('data').get('temperature')
+        }
+    }
+
+    return format2
 
 def main (jsonObject):
 
